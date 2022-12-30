@@ -73,7 +73,7 @@ func (z *Int) FromHex(hex string) {
 
 // UnmarshalText implements encoding.TextUnmarshaler
 func (z *Int) UnmarshalText(input []byte) error {
-	return z.fromHex(string(input))
+	return z.FromHex(string(input))
 }
 
 // SetFromBig converts a big.Int to Int and sets the value to z.
