@@ -52,14 +52,7 @@ func FromBig(b *big.Int) (*Int, bool) {
 }
 
 // fromHex is the internal implementation of parsing a hex-string.
-func (z *Int) fromHex(hex string) error {
-	if err := checkNumberS(hex); err != nil {
-		return err
-	}
-
-	if len(hex) > 66 {
-		return ErrBig256Range
-	}
+func (z *Int) FromHex(hex string) {
 	end := len(hex)
 	for i := 0; i < 4; i++ {
 		start := end - 16
@@ -76,18 +69,6 @@ func (z *Int) fromHex(hex string) error {
 		}
 		end = start
 	}
-	return nil
-}
-
-// FromHex is a convenience-constructor to create an Int from
-// a hexadecimal string. The string is required to be '0x'-prefixed
-// Numbers larger than 256 bits are not accepted.
-func FromHex(hex string) (*Int, error) {
-	var z Int
-	if err := z.fromHex(hex); err != nil {
-		return nil, err
-	}
-	return &z, nil
 }
 
 // UnmarshalText implements encoding.TextUnmarshaler
