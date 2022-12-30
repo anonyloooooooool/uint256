@@ -52,7 +52,7 @@ func FromBig(b *big.Int) (*Int, bool) {
 }
 
 // fromHex is the internal implementation of parsing a hex-string.
-func (z *Int) FromHex(hex string) {
+func (z *Int) FromHex(hex string) error {
 	end := len(hex)
 	for i := 0; i < 4; i++ {
 		start := end - 16
@@ -69,6 +69,7 @@ func (z *Int) FromHex(hex string) {
 		}
 		end = start
 	}
+	return nil
 }
 
 // UnmarshalText implements encoding.TextUnmarshaler
