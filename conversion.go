@@ -72,6 +72,27 @@ func (z *Int) FromHex(hex string) error {
 	return nil
 }
 
+func (z *Int) FromHexNoPrefix(hex string) error {
+	end := len(hex)
+	for i := 0; i < 4; i++ {
+		start := end - 16
+		if start < 0 {
+			start = 0
+		}
+		for ri := start; ri < end; ri++ {
+			nib := bintable[hex[ri]]
+			if nib == badNibble {
+				return ErrSyntax
+			}
+			z[i] = z[i] << 4
+			z[i] += uint64(nib)
+		}
+		end = start
+	}
+	return nil
+}
+
+
 // UnmarshalText implements encoding.TextUnmarshaler
 func (z *Int) UnmarshalText(input []byte) error {
 	return z.FromHex(string(input))
